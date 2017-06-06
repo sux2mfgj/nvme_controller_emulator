@@ -1,0 +1,3 @@
+[submodule "freebsd"]
+	path = freebsd
+	url = git@github.com:himaaaatti/freebsd.git
