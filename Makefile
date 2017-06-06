@@ -40,7 +40,7 @@ bhyve_build:
 
 .IGNORE: bhyve_stop
 bhyve_stop:
-	bhyvectl --destroy --vm $(VM_NAME)
+	sudo bhyvectl --destroy --vm=$(VM_NAME)
 
 .PHONY: run
 run: $(BACKUP_LOG_FILE) bhyve_build bhyveload_build bhyve_stop $(DISK_IMAGE)
@@ -51,11 +51,11 @@ run: $(BACKUP_LOG_FILE) bhyve_build bhyveload_build bhyve_stop $(DISK_IMAGE)
 		-P 		\
 		-c 1	\
 		-m 4G 	\
-		-l com,stdio \
+		-l com1,stdio \
 		-s 0:0,hostbridge \
 		-s 1:0,lpc \
 		-s 2:0,virtio-blk,$(DISK_IMAGE) \
-		-s 3:0,virtio-net,tap0
+		-s 3:0,virtio-net,tap0 \
 		-s 4:0,nvme  \
 		$(VM_NAME)
 
