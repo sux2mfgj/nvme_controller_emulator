@@ -59,3 +59,6 @@ run: $(BACKUP_LOG_FILE) bhyve_build bhyveload_build bhyve_stop $(DISK_IMAGE)
 		-s 4:0,nvme  \
 		$(VM_NAME)
 
+clean:
+	make -C $(BHYVE_DIR) clean cleandepend
+	make -C $(BHYVELOAD_DIR) clean cleandepend
