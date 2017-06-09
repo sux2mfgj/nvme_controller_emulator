@@ -1,5 +1,9 @@
 # nvme_controller_emulator
 
+## build
+```
+$ gmake build
+```
 
 ## Tasks
 
