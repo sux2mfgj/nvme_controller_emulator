@@ -1,4 +1,5 @@
 # nvme_controller_emulator
+![build_status](https://travis-ci.org/himaaaatti/nvme_controller_emulator.svg?branch=master)
 
 ## build
 ```
