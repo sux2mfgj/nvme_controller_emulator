@@ -1,0 +1,9 @@
+language: C
+
+addons:
+    apt:
+        packages:
+            - build_essential
+
+script:
+    - make bhyve_build
