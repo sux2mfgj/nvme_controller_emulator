@@ -12,7 +12,7 @@ $ gmake build
 Initialization steps are defined at Section 7.6.1 in NVMe specification. Controller emulator must has below functions.  
 
 	- [x] PCI configuraion registers
-	- [ ] MSI/MSI-X registers
+	- [x] MSI/MSI-X registers
 	- [x] NVMe controller register 
 		- [x] AQA (admin queue attirubte)
 		- [x] ASQ (admin submission queue)
@@ -21,9 +21,19 @@ Initialization steps are defined at Section 7.6.1 in NVMe specification. Control
 		- [x] Admin sumbmission queue doorbell register
 		- [x] Admin completion queue doorbell register
 
-	- [ ] Admin Commands
-		- [ ] Set Feature
-			- [ ] Number of Queues
-			- [ ] Asynchronous Event Configuration
-		- [ ] Create I/O Completeion Queue
-		- [ ] Create I/O Submission Queue
+	- [x] Admin Commands
+		- [x] Set Feature
+			- [x] Number of Queues
+			- [x] Asynchronous Event Configuration
+            - [x] Interrupt Coalecing
+        - [x] Get Feature
+            - [x] Temparture Threshold
+
+		- [x] Create I/O Completeion Queue
+		- [x] Create I/O Submission Queue
+        - [x] Identify
+            - [x] Identify Controller data structure
+
+- read and write data via this nvme controller emulator
+
+//TODO list up
