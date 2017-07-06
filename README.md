@@ -35,5 +35,8 @@ Initialization steps are defined at Section 7.6.1 in NVMe specification. Control
             - [x] Identify Controller data structure
 
 - read and write data via this nvme controller emulator
-
+	- [ ] Read
+		WIP
+	- [ ] Flush
+	
 //TODO list up
