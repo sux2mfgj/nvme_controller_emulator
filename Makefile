@@ -20,7 +20,8 @@ VM_NAME			:= freebsd00
 DEBUG			:= -g 8888
 CPU_NUM			:= 1
 MEM_SIZE		:= 4G
-
+NVME_DISK		:= ./nvme.disk
+	
 all: help
 
 .PHONY: help
@@ -44,6 +45,9 @@ $(DISK_IMAGE): $(ISO)
 	truncate -s 16G $@
 	sudo sh $(VMRUN) -c 2 -m 4G -t tap0 -d $@ -i -I $(ISO) $(VM_NAME)
 
+$(NVME_DISK): 
+	truncate -s 16M $@
+
 .PHONY: bhyveload_build
 bhyveload_build:
 	make -C $(BHYVELOAD_DIR)
@@ -62,7 +66,7 @@ bootload: bhyve_build bhyveload_build $(DISK_IMAGE)
 	sudo $(BHYVELOAD) -c stdio -m 4G -d $(DISK_IMAGE) $(VM_NAME)
 
 .PHONY: run
-run: bootload $(BACKUP_LOG_FILE) bhyve_build bhyveload_build $(DISK_IMAGE)
+run: bootload $(BACKUP_LOG_FILE) bhyve_build bhyveload_build $(DISK_IMAGE) $(NVME_DISK)
 	sudo $(BHYVE)	\
 		-A 		\
 		-H 		\
@@ -75,7 +79,7 @@ run: bootload $(BACKUP_LOG_FILE) bhyve_build bhyveload_build $(DISK_IMAGE)
 		-s 1:0,lpc \
 		-s 2:0,virtio-blk,$(DISK_IMAGE) \
 		-s 3:0,virtio-net,tap0 \
-        -s 4:0,nvme  \
+        -s 4:0,nvme,$(NVME_DISK) \
 		-g 8888 \
 		$(VM_NAME)
 
@@ -85,3 +89,10 @@ run: bootload $(BACKUP_LOG_FILE) bhyve_build bhyveload_build $(DISK_IMAGE)
 clean:
 	make -C $(BHYVE_DIR) clean cleandepend
 	make -C $(BHYVELOAD_DIR) clean cleandepend
+
+netowrk:
+	ifconfig tap0 create
+	sysctl net.link.tap.up_on_open=1
+	ifconfig bridge0 create
+	ifconfig bridge0 addm re0 addm tap0
+	ifconfig bridge0 up
